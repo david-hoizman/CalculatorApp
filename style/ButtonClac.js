@@ -1,5 +1,9 @@
 import { StyleSheet } from 'react-native';
 
+/**
+ * Stylesheet for button components in a calculator application.
+ */
+
 const styles = StyleSheet.create({
     classsicButton: {
       backgroundColor: 'purple',
