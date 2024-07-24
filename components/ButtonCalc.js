@@ -1,7 +1,7 @@
 
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
-import styles from '../style/ButtonClac'; 
+import styles from '../style/ButtonClac';
 
 /**
  * ButtonCalc component represents a button in a calculator application.
@@ -12,11 +12,10 @@ const ButtonCalc = ({ value, calc, setCalc }) => {
   // Array of operators used to determine operator types
   const operators = ['+', '-', '/', '*', '%'];
 
-/**
+  /**
    * Handles button click event based on the value of the button.
    * Updates the calculator display (calc state) accordingly.
    */
-
   const handleClick = () => {
     // Handle Clear (C) button
     if (value.val === 'C') {
@@ -39,11 +38,23 @@ const ButtonCalc = ({ value, calc, setCalc }) => {
         const negatedResult = (-1) * parseFloat(calc);
         setCalc(negatedResult.toString());
       } else {
-        // Replace the last operator with '-' if it's '+', or vice versa
+        // Get the last operator
         const lastOperator = calc[lastOperatorIndex];
-        const newOperator = lastOperator === '+' ? '-' : '+';
-        const newCalculation = calc.slice(0, lastOperatorIndex) + newOperator + calc.slice(lastOperatorIndex + 1);
-        setCalc(newCalculation);
+
+        // Check if the last operator is + or -
+        if (lastOperator === '+' || lastOperator === '-') {
+          // Replace the last operator with - if it's +, or with + if it's -
+          const newOperator = lastOperator === '+' ? '-' : '+';
+          const newCalculation = calc.slice(0, lastOperatorIndex) + newOperator + calc.slice(lastOperatorIndex + 1);
+          setCalc(newCalculation);
+        } else {
+          // Check if the last operator is * or / or %
+          if (lastOperator === '*' || lastOperator === '/' || lastOperator === '%') {
+            // Append - after the last operator
+            const updatedCalc = calc.slice(0, lastOperatorIndex + 1) + '-' + calc.slice(lastOperatorIndex + 1);
+            setCalc(updatedCalc);
+          }
+        }
       }
     } else if (value.val === '%') {
       // Ensure there is something in the calculation string to operate on
@@ -60,14 +71,12 @@ const ButtonCalc = ({ value, calc, setCalc }) => {
         return; // The last number in the calculation is not valid
       }
 
-
       // Calculate the percentage of the last number and update the calculation string
       const percentage = parseFloat(lastNumber) / 100;
       const newCalculation = calc.slice(0, lastIndex + 1) + percentage;
       setCalc(newCalculation);
     } else {
-      // Append the button value to the current calculation string
-      setCalc(calc + value.val);
+      setCalc(calc + value.val); // Append the button value to the current calculation string
     }
   };
 
@@ -82,6 +91,3 @@ const ButtonCalc = ({ value, calc, setCalc }) => {
 };
 
 export default ButtonCalc;
-
-
- 
