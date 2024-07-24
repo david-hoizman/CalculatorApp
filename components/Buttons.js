@@ -7,7 +7,7 @@ export default function Buttons({ calc, setCalc }) {
     const buttons = [];
     const values = [
         { val: 'C', type: "classic" },
-        { val: '+', type: "classic" },
+        { val: '+/-', type: "classic" },
         { val: '%', type: "classic" },
         { val: '/', type: "classic" },
         { val: 7, type: "classic" },
